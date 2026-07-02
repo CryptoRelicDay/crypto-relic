@@ -369,7 +369,10 @@ function doOpen() {
 // ---------- Шеринг ----------
 function shareUrl(username) {
   const base = location.origin + location.pathname;
-  return `${base}?u=${encodeURIComponent(username)}&lang=${LANG}`;
+  // d=дата делает ссылку уникальной на каждый день: кэш карточек X
+  // не может подсунуть вчерашнее превью, и смысл честный — дроп-то дневной
+  const d = todayUTC().replace(/-/g, '');
+  return `${base}?u=${encodeURIComponent(username)}&lang=${LANG}&d=${d}`;
 }
 function shareToX() {
   if (!currentDrop) return;
