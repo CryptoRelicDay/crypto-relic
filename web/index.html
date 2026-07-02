@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Крипто-реликвия дня</title>
+  <meta name="description" content="Раз в день весь мир открывает один кейс, запечатанный хешем биткоин-блока. Что выпадет — зависит от твоего ника. Реролла нет." />
+  <!-- OG / Twitter Card: статические теги; для картинки-под-дроп нужен serverless (см. README) -->
+  <meta property="og:title" content="Крипто-реликвия дня" />
+  <meta property="og:description" content="Проверь, что выпадет твоему нику из сегодняшнего биткоин-блока." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <h1>Крипто-реликвия <span>дня</span></h1>
+      <p class="sub">Один блок. Один день. Один дроп на ник. Реролла нет.</p>
+      <div id="beacon" class="beacon">Ищу сегодняшний блок…</div>
+    </header>
+
+    <section class="panel">
+      <label class="field">
+        <span>Твой ник</span>
+        <input id="uname" type="text" maxlength="24" placeholder="напр. satoshi" autocomplete="off" />
+      </label>
+      <button id="openBtn" class="open-btn" disabled>Открыть реликвию дня</button>
+      <p id="hint" class="hint"></p>
+    </section>
+
+    <section id="cardHost" class="card-host" hidden>
+      <!-- карточка вставляется скриптом -->
+    </section>
+
+    <section id="shareRow" class="share-row" hidden>
+      <button id="shareX" class="share-btn x">Поделиться в 𝕏</button>
+      <button id="copyLink" class="share-btn ghost">Скопировать ссылку</button>
+    </section>
+
+    <section class="collection">
+      <div class="collection-head">
+        <h2>Коллекция</h2>
+        <div class="streak" id="streak">Стрик: 0 дн.</div>
+      </div>
+      <div id="grid" class="grid"></div>
+      <p id="emptyColl" class="empty">Пока пусто. Открой первую реликвию ☝️</p>
+    </section>
+
+    <footer class="foot">
+      <p>Дроп детерминирован: <code>дата + хеш блока + ник</code>. Никто не может подкрутить — исходник открыт.</p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "crypto-relic-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Telegram-бот 'Крипто-реликвия дня' на общем движке дропа",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}

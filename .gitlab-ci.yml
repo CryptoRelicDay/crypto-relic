@@ -1,0 +1,11 @@
+# GitLab Pages: публикует статический сайт из web/ как public/
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp -r web/* public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
