@@ -481,6 +481,15 @@ async function init() {
   loadFeed();
   setInterval(loadFeed, 30000);
 
+  // счётчик захода: агрегаты по дням, без куки и идентификаторов
+  if (location.hostname !== 'localhost') {
+    fetch(FEED_URL + '/hit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ r: document.referrer || '' }),
+    }).catch(() => {});
+  }
+
   // Уточнение по региону IP — только если язык не выбран вручную, не задан ссылкой
   // и ещё не кэширован. Переключаем, лишь если пользователь пока не трогал тумблер.
   if (!manualPick && !urlPick && !geoCache) {
