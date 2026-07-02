@@ -1,0 +1,80 @@
+<svg width="1500" height="500" viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="35%" cy="30%" r="90%">
+      <stop offset="0%" stop-color="#1b2540"/>
+      <stop offset="55%" stop-color="#0e1322"/>
+      <stop offset="100%" stop-color="#0b0e14"/>
+    </radialGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1500" height="500" fill="url(#bg)"/>
+
+  <!-- фоновые гексы-блоки, едва заметные -->
+  <g fill="none" stroke="#f59e0b" stroke-opacity="0.06" stroke-width="2">
+    <polygon points="120,380 170,410 170,470 120,500 70,470 70,410"/>
+    <polygon points="1380,40 1430,70 1430,130 1380,160 1330,130 1330,70"/>
+    <polygon points="760,-20 810,10 810,70 760,100 710,70 710,10"/>
+  </g>
+
+  <!-- ЛОГО: гекс-печать с руной (как аватар) -->
+  <g transform="translate(150,250) scale(0.62)" filter="url(#glow)">
+    <polygon points="0,-148 122,-76 122,76 0,148 -122,76 -122,-76"
+             fill="none" stroke="url(#amber)" stroke-width="16" stroke-linejoin="round"/>
+    <polygon points="0,-76 64,0 0,76 -64,0" fill="#0e1322" stroke="url(#amber)" stroke-width="13" stroke-linejoin="round"/>
+    <line x1="0" y1="-44" x2="0" y2="44" stroke="#ffd166" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="11" fill="#fde68a"/>
+  </g>
+
+  <!-- ТЕКСТ -->
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="300" y="235" font-size="64" font-weight="800" fill="#e6ecf5" letter-spacing="1">CRYPTO RELIC <tspan fill="#f59e0b">DAY</tspan></text>
+    <text x="303" y="290" font-size="30" font-weight="600" fill="#ffd166" letter-spacing="0.5">One block. One day. One drop. No rerolls.</text>
+    <text x="303" y="330" font-size="21" fill="#8592a8">Daily collectible sealed by a real Bitcoin block · provably fair</text>
+  </g>
+
+  <!-- ВЕЕР КАРТОЧЕК РЕДКОСТЕЙ (справа) -->
+  <!-- common -->
+  <g transform="translate(1000,150) rotate(-10)">
+    <rect x="-60" y="-85" width="120" height="170" rx="12" fill="#151c2c" stroke="#9aa4b2" stroke-width="3"/>
+    <polygon points="0,-38 26,-6 0,26 -26,-6" fill="none" stroke="#9aa4b2" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="-38" y="44" width="76" height="8" rx="4" fill="#9aa4b2" opacity="0.5"/>
+    <rect x="-28" y="60" width="56" height="6" rx="3" fill="#9aa4b2" opacity="0.3"/>
+  </g>
+  <!-- rare -->
+  <g transform="translate(1105,175) rotate(-4)">
+    <rect x="-60" y="-85" width="120" height="170" rx="12" fill="#151c2c" stroke="#38bdf8" stroke-width="3"/>
+    <polygon points="0,-38 26,-6 0,26 -26,-6" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="-38" y="44" width="76" height="8" rx="4" fill="#38bdf8" opacity="0.5"/>
+    <rect x="-28" y="60" width="56" height="6" rx="3" fill="#38bdf8" opacity="0.3"/>
+  </g>
+  <!-- epic -->
+  <g transform="translate(1212,190) rotate(2)" filter="url(#softglow)">
+    <rect x="-60" y="-85" width="120" height="170" rx="12" fill="#151c2c" stroke="#a855f7" stroke-width="3"/>
+    <polygon points="0,-38 26,-6 0,26 -26,-6" fill="none" stroke="#a855f7" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="-38" y="44" width="76" height="8" rx="4" fill="#a855f7" opacity="0.5"/>
+    <rect x="-28" y="60" width="56" height="6" rx="3" fill="#a855f7" opacity="0.3"/>
+  </g>
+  <!-- legendary: центральная, крупнее, со свечением -->
+  <g transform="translate(1330,205) rotate(9)" filter="url(#glow)">
+    <rect x="-66" y="-94" width="132" height="188" rx="13" fill="#171226" stroke="url(#amber)" stroke-width="4"/>
+    <polygon points="0,-42 29,-7 0,28 -29,-7" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linejoin="round"/>
+    <line x1="0" y1="-27" x2="0" y2="13" stroke="#ffd166" stroke-width="6" stroke-linecap="round"/>
+    <rect x="-42" y="48" width="84" height="9" rx="4.5" fill="#f59e0b" opacity="0.7"/>
+    <rect x="-30" y="66" width="60" height="7" rx="3.5" fill="#f59e0b" opacity="0.4"/>
+  </g>
+
+  <!-- хеш блока внизу, полупрозрачный моноширинный -->
+  <text x="750" y="470" font-family="Consolas, Courier New, monospace" font-size="20" fill="#8592a8" opacity="0.4" text-anchor="middle" letter-spacing="2">sealed by block #956345 · 000000000000000000016fed97cc3441e8257e1eee1a85475c46b951e8bfc95c</text>
+</svg>
