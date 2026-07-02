@@ -10,14 +10,14 @@
 - **Website:** `https://slakertop1.github.io/crypto-relic/`
 - **Location:** `Block height 956345+` (вместо города — растёт с каждым днём, люди замечают такие детали)
 
-## Закреплённый твит (pin сразу после публикации)
+## Закреплённый твит (pin сразу после публикации) — 265/280 по правилам X
 
 ```
-Every day, one case for the whole world — sealed by today's Bitcoin block hash.
+One case a day for the whole world — sealed by today's Bitcoin block hash.
 
-Your drop = f(block, your name). Deterministic. No rerolls. No server. No tricks — the source is open.
+Your drop = f(block, your name). No rerolls. No server. No tricks — the source is open.
 
-Miss a day, and that relic is gone forever.
+Miss a day, that relic is gone forever.
 
 What did today's block give you?
 👉 https://slakertop1.github.io/crypto-relic/
