@@ -1,12 +1,16 @@
-# Ежедневный автопост «дроп дня» в X от @CryptoRelicDay
+# Ежедневный пост «дроп дня» в X от @CryptoRelicDay.
+# Режим задаётся repo-переменной POST_MODE:
+#   draft (по умолчанию) — создать Issue с готовым текстом (постишь руками);
+#   live — опубликовать в X автоматически (нужны кредиты X API).
 name: daily-post
 on:
   schedule:
     - cron: '0 15 * * *'   # 15:00 UTC ежедневно
-  workflow_dispatch:        # ручной запуск для теста
+  workflow_dispatch:        # ручной запуск
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   post:
@@ -16,9 +20,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/xpost.mjs
+      - name: Compose (and post if live)
+        run: node scripts/xpost.mjs
         env:
+          POST_MODE: ${{ vars.POST_MODE || 'draft' }}
           X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
           X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+      - name: Create draft issue
+        if: ${{ (vars.POST_MODE || 'draft') != 'live' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="📤 Пост дня — $(date -u +%F) (скопируй и запость в X)"
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body-file draft.txt

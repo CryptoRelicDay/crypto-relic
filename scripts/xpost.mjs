@@ -1,14 +1,19 @@
-// Ежедневный автопост в X от @CryptoRelicDay.
-// Без зависимостей: OAuth 1.0a подпись на node:crypto, POST /2/tweets.
-// Ключи берутся из переменных окружения (GitHub Actions secrets).
+// Ежедневный пост «дроп дня» для X от @CryptoRelicDay.
+// Два режима (env POST_MODE):
+//   draft (по умолчанию) — только составить текст и записать в draft.txt;
+//   live — опубликовать через POST /2/tweets (нужны кредиты X API).
+// Без зависимостей: OAuth 1.0a подпись на node:crypto.
 
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+
+const MODE = process.env.POST_MODE === 'live' ? 'live' : 'draft';
 
 const {
   X_CONSUMER_KEY, X_CONSUMER_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET,
 } = process.env;
 
-if (!X_CONSUMER_KEY || !X_CONSUMER_SECRET || !X_ACCESS_TOKEN || !X_ACCESS_TOKEN_SECRET) {
+if (MODE === 'live' && (!X_CONSUMER_KEY || !X_CONSUMER_SECRET || !X_ACCESS_TOKEN || !X_ACCESS_TOKEN_SECRET)) {
   console.error('Missing X API credentials in env');
   process.exit(1);
 }
@@ -76,6 +81,13 @@ const text = [
 console.log('--- tweet text ---');
 console.log(text);
 console.log('------------------');
+
+fs.writeFileSync('draft.txt', text);
+
+if (MODE !== 'live') {
+  console.log('POST_MODE=draft — текст записан в draft.txt, публикации не было.');
+  process.exit(0);
+}
 
 const { status, body } = await postTweet(text);
 console.log('HTTP', status);
