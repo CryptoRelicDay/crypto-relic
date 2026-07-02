@@ -1,0 +1,9 @@
+name = "crypto-relic-feed"
+main = "src/worker.mjs"
+compatibility_date = "2026-06-01"
+account_id = "2b1d2c3c2875807530703ac9eaa203bc"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "FEED"
+id = "06caa5981f4848a6a4a530120a46d6b3"

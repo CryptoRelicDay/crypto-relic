@@ -1,4 +1,6 @@
-import { rollDrop, dropLine, relicName, rarityLabelOf, shortHash } from './engine.mjs';
+import { rollDrop, dropLine, relicName, rarityLabelOf, shortHash, RARITIES } from './engine.mjs';
+
+const FEED_URL = 'https://crypto-relic-feed.cryptorelicday.workers.dev';
 
 // ---------- Вспомогательное ----------
 const $ = (id) => document.getElementById(id);
@@ -14,6 +16,7 @@ const els = {
   beacon: $('beacon'), uname: $('uname'), openBtn: $('openBtn'), hint: $('hint'),
   cardHost: $('cardHost'), shareRow: $('shareRow'), shareX: $('shareX'), copyLink: $('copyLink'),
   grid: $('grid'), emptyColl: $('emptyColl'), streak: $('streak'),
+  feedSection: $('feedSection'), feedTitle: $('feedTitle'), feedStrip: $('feedStrip'),
 };
 
 let BEACON = null;         // { hash, height }
@@ -51,6 +54,8 @@ const I18N = {
     hintCopyFail: 'Не удалось скопировать — скопируй ссылку из адресной строки.',
     shareText: (line) => `Моя крипто-реликвия дня: ${line}.\nПроверь, что выпадет твоему нику 👇`,
     toggleLabel: 'EN',
+    feedTitle: 'Последние дропы',
+    agoNow: 'только что', agoMin: (n) => `${n} мин назад`, agoHr: (n) => `${n} ч назад`,
   },
   en: {
     docTitle: 'Crypto Relic Day',
@@ -80,6 +85,8 @@ const I18N = {
     hintCopyFail: 'Couldn’t copy — grab the link from the address bar.',
     shareText: (line) => `My crypto relic of the day: ${line}.\nCheck what today’s block gives you 👇`,
     toggleLabel: 'RU',
+    feedTitle: 'Latest drops',
+    agoNow: 'just now', agoMin: (n) => `${n}m ago`, agoHr: (n) => `${n}h ago`,
   },
 };
 const t = () => I18N[LANG];
@@ -222,6 +229,57 @@ function renderCollection() {
     </div>`).join('');
 }
 
+// ---------- Лента последних дропов ----------
+let FEED_CACHE = [];
+
+function rarityColorOf(key) {
+  return (RARITIES.find((r) => r.key === key) || RARITIES[0]).color;
+}
+
+function timeAgo(ts) {
+  const L = t();
+  const mins = Math.floor((Date.now() - ts) / 60000);
+  if (mins < 1) return L.agoNow;
+  if (mins < 60) return L.agoMin(mins);
+  return L.agoHr(Math.floor(mins / 60));
+}
+
+function renderFeed() {
+  els.feedTitle.textContent = t().feedTitle;
+  if (!FEED_CACHE.length) { els.feedSection.hidden = true; return; }
+  els.feedSection.hidden = false;
+  els.feedStrip.textContent = '';
+  for (const e of FEED_CACHE) {
+    const cell = document.createElement('div');
+    cell.className = 'feed-cell';
+    cell.style.setProperty('--fc', rarityColorOf(e.r));
+    const u = document.createElement('div'); u.className = 'fu'; u.textContent = e.u;
+    const n = document.createElement('div'); n.className = 'fn'; n.textContent = relicName(e.a, e.n, LANG);
+    const ti = document.createElement('div'); ti.className = 'ft';
+    ti.textContent = `${rarityLabelOf(e.r, LANG)} · ${timeAgo(e.ts)}`;
+    cell.append(u, n, ti);
+    els.feedStrip.append(cell);
+  }
+}
+
+async function loadFeed() {
+  try {
+    const r = await fetch(FEED_URL + '/recent');
+    if (!r.ok) return;
+    FEED_CACHE = await r.json();
+    renderFeed();
+  } catch { /* лента не критична — молча пропускаем */ }
+}
+
+function reportOpen(drop) {
+  if (!BEACON || BEACON.height <= 0) return; // оффлайн-маяк в общую ленту не шлём
+  fetch(FEED_URL + '/open', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: drop.username, hash: BEACON.hash, height: BEACON.height }),
+  }).then(() => loadFeed()).catch(() => {});
+}
+
 // ---------- Открытие ----------
 function alreadyOpenedToday(username) {
   return loadCollection().some((c) => c.date === todayUTC() && c.username === username.trim().toLowerCase());
@@ -249,6 +307,7 @@ function doOpen() {
   renderStreak();
   els.uname.value = uname;
   localStorage.setItem('lastUser', uname);
+  reportOpen(drop);
 }
 
 // ---------- Шеринг ----------
@@ -303,6 +362,7 @@ function applyLang() {
 
   renderStreak();
   renderCollection();
+  renderFeed();
 
   // перерисовать открытую карточку на новом языке (тот же предмет, другие слова)
   if (currentDrop) {
@@ -356,6 +416,9 @@ async function init() {
   }
 
   applyLang();          // повторно — теперь с загруженным BEACON и (возможно) превью-дропом
+
+  loadFeed();
+  setInterval(loadFeed, 30000);
 
   // Уточнение по региону IP — только если язык не выбран вручную, не задан ссылкой
   // и ещё не кэширован. Переключаем, лишь если пользователь пока не трогал тумблер.
