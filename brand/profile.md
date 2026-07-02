@@ -7,7 +7,7 @@
   ```
   One block. One day. One drop. Daily collectible sealed by a real Bitcoin block. Provably fair — no rerolls. Check what today's block gives YOU 👇
   ```
-- **Website:** `https://slakertop1.github.io/crypto-relic/`
+- **Website:** `https://cryptorelicday.github.io/crypto-relic/`
 - **Location:** `Block height 956345+` (вместо города — растёт с каждым днём, люди замечают такие детали)
 
 ## Закреплённый твит (pin сразу после публикации) — 265/280 по правилам X
@@ -20,7 +20,7 @@ Your drop = f(block, your name). No rerolls. No server. No tricks — the source
 Miss a day, that relic is gone forever.
 
 What did today's block give you?
-👉 https://slakertop1.github.io/crypto-relic/
+👉 https://cryptorelicday.github.io/crypto-relic/
 ```
 
 ## Твит №2 — «проверь свой» (главный reply-магнит)
@@ -28,7 +28,7 @@ What did today's block give you?
 ```
 Drop your handle in the replies and I'll tell you what today's block gave you 🎴
 
-Or check yourself: https://slakertop1.github.io/crypto-relic/?u=YOURNAME
+Or check yourself: https://cryptorelicday.github.io/crypto-relic/?u=YOURNAME
 
 Rarest reply gets pinned.
 ```
@@ -40,7 +40,7 @@ Rarest reply gets pinned.
 
 Here it means: your drop is a pure function of today's Bitcoin block hash + your name. Anyone can recompute it. We couldn't rig it if we wanted to — we don't even have a server.
 
-Code: https://github.com/slakertop1/crypto-relic
+Code: https://github.com/CryptoRelicDay/crypto-relic
 ```
 
 ## Шаблон ежедневного поста (руками или ботом)
@@ -52,7 +52,7 @@ Code: https://github.com/slakertop1/crypto-relic
 
 Today's relic pool is live. One drop per name. Gone at midnight UTC.
 
-https://slakertop1.github.io/crypto-relic/
+https://cryptorelicday.github.io/crypto-relic/
 ```
 
 ## Правила ведения (первые 4 недели)
