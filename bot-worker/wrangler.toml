@@ -1,0 +1,13 @@
+name = "crypto-relic-bot"
+main = "src/worker.mjs"
+compatibility_date = "2026-06-01"
+account_id = "2b1d2c3c2875807530703ac9eaa203bc"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "BOTKV"
+id = "34cc9f7b7f4f4927a67efd01534b832c"
+
+# Секреты (задаются wrangler secret put):
+#   BOT_TOKEN  — токен игрового бота от BotFather
+#   WEBHOOK_SECRET — произвольная строка, сверяется с X-Telegram-Bot-Api-Secret-Token
